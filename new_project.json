@@ -1,0 +1,357 @@
+ {
+  "project": {
+    "name": "New project",
+    "id": "new",
+    "creationTs": 1691921932988,
+    "lastModifiedTs": 1691923674233
+  },
+  "graph": {
+    "nodes": [
+      {
+        "id": "body_segmentation_sla2je",
+        "nodeSpecId": "body_segmentation",
+        "customData": {
+          "rightOfNode": "input_image_o2lwvo",
+          "previewX": 480,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 160,
+          "posY": 128,
+          "width": 176,
+          "selected": false
+        },
+        "propValues": {
+          "modelOption": "MediaPipeSelfieSegmentation"
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "live_camera_uen5km",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "mask_visualizer_b212an",
+        "nodeSpecId": "mask_visualizer",
+        "customData": {
+          "rightOfNode": "body_segmentation_sla2je",
+          "previewX": 512,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 384,
+          "posY": 32,
+          "width": 176,
+          "selected": false
+        },
+        "propValues": {
+          "mode": "fg-image",
+          "hidePreview": true
+        },
+        "inputValues": {
+          "color": "#22e8dd"
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "live_camera_uen5km",
+              "outputId": "image"
+            }
+          ],
+          "segmentationResult": [
+            {
+              "sourceNodeId": "body_segmentation_sla2je",
+              "outputId": "segmentationResult"
+            }
+          ]
+        }
+      },
+      {
+        "id": "face_landmark_89funp",
+        "nodeSpecId": "face_landmark",
+        "customData": {
+          "rightOfNode": "mask_visualizer_b212an",
+          "previewX": 848,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 752,
+          "posY": -16,
+          "width": 176,
+          "selected": false
+        },
+        "inputValues": {
+          "staticImage": false
+        },
+        "incomingEdges": {
+          "image": [
+            {
+              "sourceNodeId": "mask_visualizer_b212an",
+              "outputId": "maskedImage"
+            }
+          ]
+        }
+      },
+      {
+        "id": "live_camera_uen5km",
+        "displayLabel": "Web cam",
+        "nodeSpecId": "live_camera",
+        "customData": {
+          "runContinuously": true,
+          "initialWidth": 240,
+          "initialHeight": 320,
+          "previewX": 144,
+          "previewY": 0,
+          "previewWidth": 240,
+          "previewHeight": 320
+        },
+        "uiData": {
+          "posX": -121.50782775878906,
+          "posY": 91.05807495117188,
+          "width": 176,
+          "selected": false
+        },
+        "propValues": {
+          "hidePreview": false
+        }
+      },
+      {
+        "id": "landmark_visualizer_wx83jp",
+        "nodeSpecId": "landmark_visualizer",
+        "customData": {
+          "rightOfNode": "face_landmark_89funp",
+          "previewX": 848,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 1024,
+          "posY": -16,
+          "width": 176,
+          "selected": false
+        },
+        "propValues": {
+          "keypointScale": 1,
+          "color": "#08f7fe",
+          "boundingBox": false,
+          "hidePreview": true
+        },
+        "incomingEdges": {
+          "landmarkResult": [
+            {
+              "sourceNodeId": "face_landmark_89funp",
+              "outputId": "landmarkResult"
+            }
+          ],
+          "image": [
+            {
+              "sourceNodeId": "mask_visualizer_b212an",
+              "outputId": "maskedImage"
+            }
+          ]
+        }
+      },
+      {
+        "id": "image_mixer_nyoxer",
+        "nodeSpecId": "image_mixer",
+        "customData": {
+          "rightOfNode": "virtual_sticker_93conf",
+          "previewX": 1200,
+          "previewY": 288,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 1568,
+          "posY": 304,
+          "width": 224,
+          "selected": false
+        },
+        "propValues": {
+          "mode": "destination-over",
+          "hidePreview": false
+        },
+        "inputValues": {
+          "topText": "",
+          "midText": "",
+          "bottomText": ""
+        },
+        "incomingEdges": {
+          "image1": [
+            {
+              "sourceNodeId": "virtual_sticker_93conf",
+              "outputId": "image"
+            }
+          ],
+          "image2": [
+            {
+              "sourceNodeId": "shader_processing_zyee7c",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "virtual_sticker_93conf",
+        "nodeSpecId": "virtual_sticker",
+        "customData": {
+          "rightOfNode": "face_landmark_89funp",
+          "previewX": 1184,
+          "previewY": 16,
+          "previewWidth": 320,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 1344,
+          "posY": 80,
+          "width": 176,
+          "selected": false
+        },
+        "propValues": {
+          "anchor": "faceTop",
+          "scale": 0.3307692307692308,
+          "offsetX": 200,
+          "offsetY": 0,
+          "hidePreview": false
+        },
+        "incomingEdges": {
+          "landmarkResult": [
+            {
+              "sourceNodeId": "face_landmark_89funp",
+              "outputId": "landmarkResult"
+            }
+          ],
+          "stickerImage": [
+            {
+              "sourceNodeId": "input_image_eazcss",
+              "outputId": "image"
+            }
+          ],
+          "originalImage": [
+            {
+              "sourceNodeId": "mask_visualizer_b212an",
+              "outputId": "maskedImage"
+            }
+          ]
+        }
+      },
+      {
+        "id": "input_image_eazcss",
+        "nodeSpecId": "input_image",
+        "customData": {
+          "initialWidth": 448,
+          "initialHeight": 240,
+          "previewX": 64,
+          "previewY": 272,
+          "previewWidth": 336,
+          "previewHeight": 160
+        },
+        "uiData": {
+          "posX": 912,
+          "posY": 272,
+          "width": 176,
+          "selected": true
+        },
+        "propValues": {
+          "urls": [
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic1.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic2.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic3.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic4.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic5.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic6.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic7.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic8.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic9.jpg",
+            "goo.gle/3LMDJCF",
+            "https://storage.googleapis.com/jmstore/TensorFlowJS/VisualBlocks/google_android_hearts.png"
+          ],
+          "gridColumnCount": 3,
+          "allowUserUpload": false,
+          "selectedImageUrl": "https://storage.googleapis.com/jmstore/TensorFlowJS/VisualBlocks/google_android_hearts.png",
+          "hidePreview": true
+        }
+      },
+      {
+        "id": "shader_processing_zyee7c",
+        "nodeSpecId": "shader_processing",
+        "customData": {
+          "initialWidth": 240,
+          "initialHeight": 320,
+          "runContinuously": true,
+          "previewX": 912,
+          "previewY": 272,
+          "previewWidth": 240,
+          "previewHeight": 320
+        },
+        "uiData": {
+          "posX": 646.196044921875,
+          "posY": 546.2880249023438,
+          "width": 208,
+          "selected": false
+        },
+        "propValues": {
+          "hidePreview": true
+        },
+        "inputValues": {
+          "shader": "depth-turbo"
+        },
+        "incomingEdges": {
+          "channel0": [
+            {
+              "sourceNodeId": "input_image_n3wbec",
+              "outputId": "image"
+            }
+          ]
+        }
+      },
+      {
+        "id": "input_image_n3wbec",
+        "displayLabel": "Background",
+        "nodeSpecId": "input_image",
+        "customData": {
+          "initialWidth": 448,
+          "initialHeight": 240,
+          "previewX": 416,
+          "previewY": 272,
+          "previewWidth": 448,
+          "previewHeight": 240
+        },
+        "uiData": {
+          "posX": 336,
+          "posY": 528,
+          "width": 176,
+          "selected": false
+        },
+        "propValues": {
+          "urls": [
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic1.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic2.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic3.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic4.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic5.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic6.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic7.jpeg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic8.jpg",
+            "https://storage.googleapis.com/tfweb/visualblocks-input-images/pic9.jpg",
+            "https://storage.googleapis.com/jmstore/TensorFlowJS/VisualBlocks/sunset.jpeg"
+          ],
+          "gridColumnCount": 3,
+          "allowUserUpload": false,
+          "selectedImageUrl": "https://storage.googleapis.com/jmstore/TensorFlowJS/VisualBlocks/sunset.jpeg",
+          "hidePreview": true
+        }
+      }
+    ]
+  }
+}
